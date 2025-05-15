@@ -1,37 +1,109 @@
-export const todoReducer = (state, action) => {
+export const initialState = {
+    Monday: [],
+    Tuesday: [],
+    Wednesday: [],
+    Thursday: [],
+    Friday: [],
+    Saturday: [],
+    Sunday: [],
+};
+
+const updateTodoList = (todoList, action) => {
     switch (action.type) {
-        case "ADD_TODO":
+        case "ADD_TODO_ITEM":
             return [
                 {
                     id: Date.now(),
-                    text: action.payload,
+                    text: action.payload.text,
                     completed: false,
-                    editing: false,
+                    editing: false
                 },
-                ...state,
+                ...todoList
             ];
+        case "COMPLETE_TODO_ITEM":
+            return todoList.map((todo) =>
+                todo.id === action.payload.id
+                    ? { ...todo, completed: !todo.completed }
+                    : todo
+            );
+        case "DELETE_TODO_ITEM":
+            return todoList.filter((todo) => todo.id !== action.payload.id);
+        case "START_EDITING_ITEM":
+            return todoList.map((todo) =>
+                todo.id === action.payload.id ? { ...todo, editing: ture } : todo
+            );
+        case "SAVE_EDIT_ITEM":
+            return todoList.map((todo) =>
+                todo.id === action.paylaod.id
+                    ? { ...todo, text: action.payload.text, editing: false }
+                    : todo
+            );
+        case "CANCEL_EDIT_ITEM":
+            return todoList.map((todo) =>
+            todo.id === action.payload.id ? { ...todo, editing: false } : todo
+        );
+        default:
+            return todoList;
+    }
+};
+
+export const todoReducer = (state, action) => {
+    switch (action.type) {
+        case "ADD_TODO":
+            return {
+                ...state,
+                [action.payload.day]: updateTodoList(state[action.payload.day], {
+                    type: "ADD_TODO_ITEM",
+                    payload: { text: action.payload.text }
+                })
+            };
 
         case "TOGGLE_COMPLETE":
-            return state.map((todo) =>
-            todo.id === action.payload
-        ? { ...todo, completed: !todo.completed }
-        : todo
-    );
+            return {
+                ...state,
+                [action.payload.day]: updateTodoList(state[action.payload.day], {
+                    type: "TOGGLE_COMPLETE_ITEM",
+                    payload: { id: action.payload.id}
+                })
+            };
 
-    case "DELETE_TODO":
-        return state.filter((todo) => todo.id !== action.payload);
+        case "DELETE_TODO":
+            return {
+                ...state,
+                [action.payload.day]: updateTodoList(state[action.payload.day], {
+                    type: "DELETE_TODO_ITEM",
+                    payload: { id: action.payload.id}
+                })
+            };
 
-    case "START_EDITING":
-        return state.map((todo) =>
-        todo.id === action.payload ? { ...todo, editing: true } : todo
-    );
+        case "START_EDITING":
+            return {
+                ...state,
+                [action.payload.day]: updateTodoList(state[action.payload.day], {
+                    type: "START_EDITING_ITEM",
+                    payload: { id: action.payload.id}
+                })
+            };
 
-    case "SAVE_EDIT":
-        return state.map((todo) =>
-        todo.id === action.payload ? { ...todo, editing: false } : todo
-    );
+        case "SAVE_EDIT":
+            return {
+                ...state,
+                [action.payload.day]: updateTodoList(state[action.payload.day], {
+                    type: "SAVE_EDIT_ITEM",
+                    payload: { id: action.payload.id, text: action.payload.text }
+                })
+            };
 
-    default:
-        return state;
+        case "CANCEL_EDIT":
+            return {
+                ...state,
+                [action.payload.day]: updateTodoList(state[action.payload.day], {
+                    type: "CANCEL_EDIT_ITEM",
+                    payload: { is: action.payload.id }
+                })
+            };
+
+        default:
+            return state;
     }
 };
