@@ -1,11 +1,12 @@
 import { useReducer, useState } from 'react';
 import { todoReducer } from './reducers/todoReducer';
+import TodoItem from './components/TodoItem';
 import './App.css';
 
 function App() {
   const [state, dispatch] = useReducer(todoReducer, []);
   const [newTodo, setNewTodo] = useState("");
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newTodo.trim() !== "") {
@@ -19,18 +20,18 @@ function App() {
       <h1>ToDo List</h1>
 
       <form onSubmit={handleSubmit}>
-        <input 
-        type="text"
-        value={newTodo}
-        placeholder='Add new todo'
-        onChange={(e) => setNewTodo(e.target.value)} 
+        <input
+          type="text"
+          value={newTodo}
+          placeholder='Add new todo'
+          onChange={(e) => setNewTodo(e.target.value)}
         />
         <button type='submit'>Add</button>
       </form>
 
       <ul>
         {state.map((todo) => (
-          <li key={todo.id}>{todo.text}</li>
+          <TodoItem key={todo.id} todo={todo} dispatch={dispatch} />
         ))}
       </ul>
     </div>
