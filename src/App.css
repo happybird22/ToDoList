@@ -3,5 +3,73 @@
   margin: 0 auto;
 }
 
+.app-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+}
 
+h1 {
+  text-align: center;
+  color: #890c1e;
+}
+
+.day-section {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-left: 6px solid #E6A20E;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.day-section h2 {
+  color: #ec2127;
+  margin-top: 0;
+}
+
+form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: .5rem;
+  border: 1px solid #767e76;
+  border-radius: 4px;
+}
+
+button {
+  background-color: #E6A20E;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+ul {
+  list-style-type: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  padding: .5rem;
+}
 

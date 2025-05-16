@@ -31,7 +31,7 @@ function App() {
     <div className='app-container'>
       <h1>Weekly Todo Planner</h1>
       {daysOfWeek.map((day) => (
-        <section key={day} className='"day-section'>
+        <section key={day} className='day-section'>
           <h2>{day}</h2>
           <form onSubmit={(e) => handleAddTodo(day, e)}>
             <input 
