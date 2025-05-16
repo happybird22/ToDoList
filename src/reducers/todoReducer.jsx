@@ -30,11 +30,11 @@ const updateTodoList = (todoList, action) => {
             return todoList.filter((todo) => todo.id !== action.payload.id);
         case "START_EDITING_ITEM":
             return todoList.map((todo) =>
-                todo.id === action.payload.id ? { ...todo, editing: ture } : todo
+                todo.id === action.payload.id ? { ...todo, editing: true } : todo
             );
         case "SAVE_EDIT_ITEM":
             return todoList.map((todo) =>
-                todo.id === action.paylaod.id
+                todo.id === action.payload.id
                     ? { ...todo, text: action.payload.text, editing: false }
                     : todo
             );
@@ -62,7 +62,7 @@ export const todoReducer = (state, action) => {
             return {
                 ...state,
                 [action.payload.day]: updateTodoList(state[action.payload.day], {
-                    type: "TOGGLE_COMPLETE_ITEM",
+                    type: "COMPLETE_TODO_ITEM",
                     payload: { id: action.payload.id}
                 })
             };
@@ -99,7 +99,7 @@ export const todoReducer = (state, action) => {
                 ...state,
                 [action.payload.day]: updateTodoList(state[action.payload.day], {
                     type: "CANCEL_EDIT_ITEM",
-                    payload: { is: action.payload.id }
+                    payload: { id: action.payload.id }
                 })
             };
 
